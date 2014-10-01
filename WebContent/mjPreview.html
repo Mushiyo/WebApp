@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>MaxJax instant previewer</title>
+	<link rel="stylesheet" href="CSS/mjPreview.css">
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+</head>
+<body>
+	<h3>MathJax Instant Previewer</h3>
+	<a target="_blank" href="http://www.mathjax.org">
+	    <img title="Powered by MathJax"
+	    src="http://cdn.mathjax.org/mathjax/badge/badge.gif"
+	    border="0" alt="Powered by MathJax" />
+	</a><br>
+
+	last update: 2014.9.28 
+	
+	<br><br>
+	
+	說明：在輸入處的<pre>"\["及"\]"</pre>間打上\(\LaTeX\)語法，例如<pre>"\[\frac{1}{2}\]"</pre>，就會在結果預覽處顯示相對應的數學式
+	<br><br>
+	
+	<table id="editor">
+		<tr>
+			<td>輸入：</td>
+			<td>結果預覽：</td>
+		</tr>
+		<tr>
+			<td><textarea id="input" rows="15" onload="update()" onkeyup="update()">\[ \]</textarea></td>
+			<td id="preview"></td>
+		</tr>
+	</table>
+
+	<br><br>
+	<table id="lookup">
+		<caption>語法速查表</caption>
+		<thead>			
+			<tr>
+				<td colspan="6">註：速查表中沒有的符號，可以參考<a target="_blank" href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm">這個網頁</a>，有很詳盡的整理</td>
+			</tr>
+			<tr>
+				<th>名稱</th>
+				<th>語法例</th>
+				<th>效果例</th>
+				<th>名稱</th>
+				<th>語法例</th>
+				<th>效果例</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>正負號</td>
+				<td>\pm</td>
+				<td>\[\pm\]</td>
+			
+				<td>負正號</td>
+				<td>\mp</td>
+				<td>\[\mp\]</td>
+			</tr>
+			<tr>
+				<td>小於，小於等於</td>
+				<td>\lt, \leq</td>
+				<td>\[\lt, \leq\]</td>
+			
+				<td>大於，大於等於</td>
+				<td>\gt, \geq</td>
+				<td>\[\gt, \geq\]</td>
+			</tr>
+			<tr>
+				<td>mod</td>
+				<td>a \bmod b</td>
+				<td>\[a \bmod b\]</td>
+			
+				<td></td>
+				<td></td>
+				<td>\[\]</td>
+			</tr>
+			<tr>
+				<td>不等於</td>
+				<td>\neq</td>
+				<td>\[\neq\]</td>
+			
+				<td>恆等，全等</td>
+				<td>\equiv</td>
+				<td>\[\equiv\]</td>
+			</tr>
+			<tr>
+				<td>各式括弧</td>
+				<td>(x), [y], \{z\}</td>
+				<td>\[(x), [y], \{z\}\]</td>
+	
+				<td></td>
+				<td></td>
+				<td>\[\]</td>
+			</tr>
+			<tr>
+				<td>floor</td>
+				<td>\lfloor x \rfloor</td>
+				<td>\[\lfloor x \rfloor\]</td>
+	
+				<td>ceiling</td>
+				<td>\lceil y \rceil</td>
+				<td>\[\lceil y \rceil\]</td>
+			</tr>
+			<tr>
+				<td>根號</td>
+				<td>\sqrt[3]{8} = 2, \sqrt{4} = 2</td>
+				<td>\[\sqrt[3]{8} = 2, \sqrt{4} = 2\]</td>
+				
+				<td>指數</td>
+				<td>n^2</td>
+				<td>\[n^2\]</td>
+			</tr>
+			<tr>
+				<td>下標</td>
+				<td>F_n = F_{n - 1} + F_{n - 2}</td>
+				<td>\[F_n = F_{n - 1} + F_{n - 2}\]</td>
+					
+				<td>向量</td>
+				<td>\vec{v}</td>
+				<td>\[\vec{v}\]</td>				
+			</tr>
+			<tr>
+				<td>not</td>
+				<td>\not{a}</td>
+				<td>\[\not{a}\]</td>
+			
+				<td>bar</td>
+				<td>\bar{a}</td>
+				<td>\[\bar{a}\]</td>
+			</tr>
+			<tr>
+				<td>分數</td>
+				<td>\frac{1}{2}, {1 \over 2}, ^1/_2</td>
+				<td>\[\frac{1}{2}, {1 \over 2}, ^1/_2\]</td>
+	
+				<td>組合</td>
+				<td>\binom{n}{k} or {n \choose k}</td>
+				<td>\[\binom{n}{k} or {n \choose k}\]</td>
+			</tr>			
+			<tr>
+				<td>連加</td>
+				<td>\sum_{i=1}^{10}i = 55</td>
+				<td>\[\sum_{i=1}^{10}i = 55\]</td>
+	
+				<td>連乘</td>
+				<td>\prod_{i=1}^{5}i = 5!</td>
+				<td>\[\prod_{i=1}^{5}i = 5!\]</td>
+			</tr>			
+			<tr>
+				<td>矩陣</td>
+				<td><pre>\begin{matrix}
+					  1&amp;2&amp;3 \\
+					  4&amp;5&amp;6 \\
+					\end{matrix},
+					\begin{pmatrix}
+					  1&amp;2&amp;3 \\
+					  4&amp;5&amp;6 \\
+					\end{pmatrix},
+					\begin{bmatrix}
+					  1&amp;2&amp;3 \\
+					  4&amp;5&amp;6 \\
+					\end{bmatrix},
+					\begin{Bmatrix}
+					  1&amp;2&amp;3 \\
+					  4&amp;5&amp;6 \\
+					\end{Bmatrix},
+					\begin{vmatrix}
+					  1&amp;2&amp;3 \\
+					  4&amp;5&amp;6 \\
+					\end{vmatrix}</pre></td>
+				<td>\[\begin{matrix}
+					  1&2&3 \\
+					  4&5&6 \\
+					\end{matrix}, \\
+					\begin{pmatrix}
+					  1&2&3 \\
+					  4&5&6 \\
+					\end{pmatrix}, \\
+					\begin{bmatrix}
+					  1&2&3 \\
+					  4&5&6 \\
+					\end{bmatrix}, \\
+					\begin{Bmatrix}
+					  1&2&3 \\
+					  4&5&6 \\
+					\end{Bmatrix}, \\
+					\begin{vmatrix}
+					  1&2&3 \\
+					  4&5&6 \\
+					\end{vmatrix}\]</td>
+					<td>function</td>
+					<td>f(n) = \cases{
+						n / 2  & \text{if n is even} \\
+						3n + 1 & \text{if n is odd} 
+						}</td>
+					<td>\[f(n) = \cases{
+						n / 2  & \text{if n is even} \\
+						3n + 1 & \text{if n is odd} 
+						}\]</td>			
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td>\[\]</td>
+			
+				<td></td>
+				<td></td>
+				<td>\[\]</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		function update() {
+			document.getElementById("preview").innerHTML = document.getElementById("input").value;
+			var mathArea = document.getElementById("preview");
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub, mathArea]);
+			// http://docs.mathjax.org/en/latest/typeset.html
+		}
+	</script>
+</body>
+</html>
