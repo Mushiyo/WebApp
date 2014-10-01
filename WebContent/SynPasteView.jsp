@@ -68,7 +68,7 @@
 				<%
 					if(request.getParameter("code") != null){
 				%>
-					<textarea name="code" rows="10"><%= request.getParameter("code") %></textarea>
+					<textarea name="code" rows="10"><%= request.getParameter("code").replaceAll("<", "&lt;").replaceAll(">", "&gt;") %></textarea>
 				<%
 					}else{		
 				%>
@@ -94,7 +94,7 @@
 			<%
 				if(hasOutputCode){
 			%>
-				<textarea rows=20><%= request.getAttribute("outputCode") %></textarea>
+				<textarea rows=20 readonly><%= request.getAttribute("outputCode") %></textarea>
 			<%
 				}
 			%>
