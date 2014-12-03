@@ -26,7 +26,7 @@
 	// set default value
 	$(function() {
 		$("#datepicker").datepicker("setDate", "<%=request.getParameter("date")%>");
-	});	
+	});
 	$(function() {
 	    $("#time").val("<%=request.getParameter("time")%>");
 	});
@@ -66,12 +66,13 @@
 			<option value="22">22:00</option>
 			<option value="23">23:00</option>
 		</select>
-		<input type="submit" name="submit" value="送出">
+		<input type="submit" name="submit" value="查詢">
 	</form>
+	<font size="2"><font color="red">*</font>查詢結果可能會被瀏覽器攔截，請設定允許彈出式視窗。</font>
 
 	<br><br>
 	<hr>
-	 <b><font color="red">*</font>說明：</b><br>
+	<b>說明：</b><br>
 	 愛樂電台官網上的即時曲目查詢只能查到過去七天的節目內容。<br>
 	 然而，實際上是連去年的內容都可以查到（去年以前至89年3月26日的則是可以看到節目表 ），只是愛樂電台的介面只給你能查七天。<br>
 	 本網頁所做的，就只是把介面做出來而已。
