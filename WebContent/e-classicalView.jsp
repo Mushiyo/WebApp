@@ -6,11 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>無限愛樂電台過去節目曲目查詢</title>
+<link rel="stylesheet" href="CSS/site.css">
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script>
 	$(function() {
 		$("#datepicker").datepicker({dateFormat: 'yy/mm/dd', minDate: new Date(2000, 3 - 1, 26), maxDate: '0'});
@@ -76,5 +76,20 @@
 	 愛樂電台官網上的即時曲目查詢只能查到過去七天的節目內容。<br>
 	 然而，實際上是連去年的內容都可以查到（去年以前至89年3月26日的則是可以看到節目表 ），只是愛樂電台的介面只給你能查七天。<br>
 	 本網頁所做的，就只是把介面做出來而已。
+	 
+	 <footer class="sticky">
+		<table class="ftTable">
+			<tr>
+				<td class="ftTdL"><strong><em>無限愛樂電台過去節目表查詢</em></strong> by Mushiyo<br> last update:
+					2014.12.3<br>
+				</td>
+				<td class="ftTdR">
+					<a href="./">Home</a>
+					| <a href="https://github.com/Mushiyo/WebApp/tree/master/src/e_classical">Source Code</a>
+					| <a target="_blank" href="http://mushiyoscomputerworld.blogspot.tw/p/blog-page_1.html">Contact Author</a>
+				 </td>
+			</tr>
+		</table>
+	</footer>
 </body>
 </html>

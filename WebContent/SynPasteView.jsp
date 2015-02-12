@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>SyntaxHighlighter Easy Tool</title>
+	<link rel="stylesheet" href="CSS/site.css">
 	<link rel="stylesheet" href="CSS/SynPaste.css">
 	<%
 		boolean hasOutputCode = request.getAttribute("outputCode") != null;
@@ -22,8 +23,7 @@
 <body>
 	<h3>SyntaxHighlighter Easy Tool</h3>
 	v0.875<br>
-	last update: 2014.10.1
-	<br> A tool built for using
+    A tool built for using
 	<a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a>
 	conveniently :)
 	<br>
@@ -151,5 +151,20 @@
 			</td>
 		</tr>
 	</table>
+	
+	<footer class="sticky">
+		<table class="ftTable">
+			<tr>
+				<td class="ftTdL"><strong><em>SyntaxHighlighter Easy Tool</em></strong> by Mushiyo<br> last update:
+					2014.10.1<br>
+				</td>
+				<td class="ftTdR">
+					<a href="./">Home</a>
+					| <a href="https://github.com/Mushiyo/WebApp/tree/master/src/synPaste">Source Code</a>
+					| <a target="_blank" href="http://mushiyoscomputerworld.blogspot.tw/p/blog-page_1.html">Contact Author</a>
+				 </td>
+			</tr>
+		</table>
+	</footer>
 </body>
 </html>
