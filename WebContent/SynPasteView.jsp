@@ -152,7 +152,7 @@
 		</tr>
 	</table>
 	
-	<footer class="sticky">
+	<footer>
 		<table class="ftTable">
 			<tr>
 				<td class="ftTdL"><strong><em>SyntaxHighlighter Easy Tool</em></strong> by Mushiyo<br> last update:

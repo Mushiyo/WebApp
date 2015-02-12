@@ -15,7 +15,7 @@ public class SynPasteModel {
 	}
 	
 	private static StringBuilder setting(String lan, String firstLine, String tabSize, String[] options, String highlightLine, String title){
-StringBuilder outputCode = new StringBuilder("<pre class=\"brush: ");
+		StringBuilder outputCode = new StringBuilder("<pre class=\"brush: ");
 		
 		if (lan.equals("null")) {
 			outputCode.append("text");
