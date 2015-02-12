@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Click Save</title>
+
+<link rel="stylesheet" href="CSS/site.css">
+
+<!-- Dropbox API Script-->
+<script type="text/javascript"
+	src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs"
+	data-app-key="8buhuq3tuwmt4p3"></script>
+
+<!-- Google Drive API Script-->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body onload="loadChooser()">
+	<table style="width: 100%;">
+		<tr>
+			<td	style="width: 50%; vertical-align: top; border-right-width: 1px; border-right-style: solid;">
+				<h3>Click Save</h3>
+				Save files on the Internet to Dropbox or Google Drive with some clicks!
+				<br> <br>
+				<font color="red">
+				WARNING!<br>
+				"Save to Google Drive" may not work correctly due to <a target="_blank" href="http://www.w3.org/TR/cors/">CORS</a> restrictions.
+			</font>
+			<br> <br>
+
+				<h3>
+					Step 1: Log in to your <a target="_blank" href="https://www.dropbox.com/login">Dropbox</a> or <a target="_blank" href="https://accounts.google.com">Google</a> account
+				</h3>
+
+				<h3>Step 2:</h3>
+				Enter the file's Url: <input type="url" id="fileUrl" oninput="update()" required></input> <br>
+				Enter filename (optional): <input type="text" id="filename" oninput="update()"></input> <br>
+
+				<h3 id="step3"></h3>
+				<span id="saveBtn"></span>
+				<span id="saveToGoogleDrive"></span>
+			</td>
+			<td style="width: 50%; vertical-align: top; padding-left: 10px;">
+				<h3>Dropbox to Google Drive</h3>
+				Save your Dropbox files to your Google Drive with some clicks!
+
+				<h3>
+					Step 1: Log in to your <a target="_blank" href="https://www.dropbox.com/login">Dropbox</a> and <a target="_blank" href="https://accounts.google.com">Google</a> account
+				</h3>
+
+				<h3>Step 2: Choose your Dropbox files which you want to save to
+					Google Drive</h3>
+				<div id="dbChooser"></div>
+
+				<h3 id="dbToGdStep3"></h3>
+				<div id="saveAllBtn"></div>
+				<ol id="fileList"></ol>
+			</td>
+		</tr>
+	</table>
+
+	<footer class="sticky">
+		<table class="ftTable">
+			<tr>
+				<td class="ftTdL">Click Save by Mushiyo<br> last update:
+					2015.2.12<br>
+				</td>
+				<td class="ftTdR">
+					<a href="./">Home</a>
+					| source code
+					| <a target="_blank" href="http://mushiyoscomputerworld.blogspot.tw/p/blog-page_1.html">Contact Author</a>
+				 </td>
+			</tr>
+		</table>
+	</footer>
+
+	<script>
+		function update() {
+			var fileUrl = document.getElementById("fileUrl").value;
+			var filename = document.getElementById("filename").value;
+
+			var saveBtn = document.getElementById("saveBtn");
+			while (saveBtn.hasChildNodes()) {
+				saveBtn.removeChild(saveBtn.lastChild);
+			}
+
+			document.getElementById("step3").innerHTML = "Step3: Click the serivce which you want to save the file";
+
+			// create a "Save to Dropbox" button
+			var dbSaveBtn = Dropbox.createSaveButton(fileUrl, filename);
+			saveBtn.appendChild(dbSaveBtn);
+
+			if (filename == "") {
+				filename = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+			}
+
+			// crete a "Save to Drive" button
+			gapi.savetodrive.render('saveToGoogleDrive', {
+				src : fileUrl,
+				filename : filename,
+				sitename : 'ClickSave'
+			});
+		}
+
+		function loadChooser() {
+			options = {
+				// Required. Called when a user selects an item in the Chooser.
+				success : function(files) {
+					//alert("Here's the file link: " + files[0].link)
+					document.getElementById("dbToGdStep3").innerHTML = "Step 3: save the file(s) to Google Drive with one click";
+
+					/*var saveAllBtn = document.createElement("INPUT");
+					saveAllBtn.setAttribute("type", "button");
+					saveAllBtn.setAttribute("value", "Save All!");
+					saveAllBtn.setAttribute("onclick", "saveAll()");
+					document.getElementById("saveAllBtn").appendChild(saveAllBtn);*/
+
+					for (i = 0; i < files.length; ++i) {
+						var listItem = document.createElement("LI");
+						var file = document.createTextNode(files[i].name + " ");
+						listItem.appendChild(file);
+
+						var saveToGdBtn = document.createElement("SPAN");
+						saveToGdBtn.setAttribute("id", "file" + i);
+						listItem.appendChild(saveToGdBtn);
+						document.getElementById("fileList").appendChild(
+								listItem);
+
+						gapi.savetodrive.render("file" + i, {
+							src : files[i].link,
+							filename : files[i].name,
+							sitename : 'Click Save'
+						});
+					}
+				},
+
+				// Optional. Called when the user closes the dialog without selecting a file
+				// and does not include any parameters.
+				cancel : function() {
+
+				},
+
+				// Optional. "preview" (default) is a preview link to the document for sharing,
+				// "direct" is an expiring link to download the contents of the file. For more
+				// information about link types, see Link types below.
+				linkType : "direct", // or "direct"
+
+				// Optional. A value of false (default) limits selection to a single file, while
+				// true enables multiple file selection.
+				multiselect : true, // or true
+
+			// Optional. This is a list of file extensions. If specified, the user will
+			// only be able to select files with these extensions. You may also specify
+			// file types, such as "video" or "images" in the list. For more information,
+			// see File types below. By default, all extensions are allowed.
+			// extensions : [ '.pdf', '.doc', '.docx' ],
+			};
+
+			var button = Dropbox.createChooseButton(options);
+			document.getElementById("dbChooser").appendChild(button);
+		}
+
+		function saveAll() {
+			//alert("Click!");
+
+			//var len = document.getElementById("fileList").childNodes.length;
+
+			var iframes = document.getElementsByTagName("IFRAME");
+			for (i = 0; i < iframes.length; ++i) {
+				iframes[i].click();
+			}
+
+			/*for(i = 0; i < len; ++i){
+				document.getElementsByTagName("").click();
+			}*/
+		}
+	</script>
+</body>
+</html>
