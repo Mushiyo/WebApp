@@ -13,7 +13,7 @@
 <!-- Google Drive API Script-->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
-<body onload="loadChooser()">
+<body onload="dbChooserAct()">
 	<table style="width: 100%;">
 		<tr>
 			<td	style="width: 50%; vertical-align: top; border-right-width: 1px; border-right-style: solid;">
@@ -100,7 +100,7 @@
 			});
 		}
 
-		function loadChooser() {
+		function dbChooserAct() {
 			options = {
 				// Required. Called when a user selects an item in the Chooser.
 				success : function(files) {
@@ -112,6 +112,11 @@
 					saveAllBtn.setAttribute("value", "Save All!");
 					saveAllBtn.setAttribute("onclick", "saveAll()");
 					document.getElementById("saveAllBtn").appendChild(saveAllBtn);*/
+					
+					var fileList = document.getElementById("fileList");
+					while (fileList.hasChildNodes()) {
+						fileList.removeChild(fileList.lastChild);
+					}
 
 					for (i = 0; i < files.length; ++i) {
 						var listItem = document.createElement("LI");
@@ -121,8 +126,7 @@
 						var saveToGdBtn = document.createElement("SPAN");
 						saveToGdBtn.setAttribute("id", "file" + i);
 						listItem.appendChild(saveToGdBtn);
-						document.getElementById("fileList").appendChild(
-								listItem);
+						fileList.appendChild(listItem);
 
 						gapi.savetodrive.render("file" + i, {
 							src : files[i].link,
