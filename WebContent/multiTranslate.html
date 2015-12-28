@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>多譯 | multiple machine translation</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h3>多譯 | multiple machine translation</h3>
+		<br>
+		<div class="row">
+			<div class="form-group col-md-5">
+				<label for="sourceLan">來源語言</label> <select class="form-control"
+					name="sourceLan" id="sourceLan">
+					<option value="zh-tw">繁體中文</option>
+					<option value="en">英文</option>
+					<option value="ja">日文</option>
+					<option value="zh-cn">簡體中文</option>
+				</select>
+			</div>
+
+			<button class="col-md-2 btn btn-primary" onload="update()"
+				onclick="update()">翻譯</button>
+
+			<div class="form-group col-md-5">
+				<label for="targetLan">目標語言</label> <select class="form-control"
+					name="targetLan" id="targetLan">
+					<option value="zh-tw">繁體中文（Yandex.Translate不支援）</option>
+					<option value="en">英文</option>
+					<option value="ja">日文</option>
+					<option value="zh-cn">簡體中文</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<textarea id="input" class="form-control" name="textToTrans"
+					placeholder="在此輸入文字" rows="10"></textarea>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" onclick="openAll()">開啟全部</button>
+						<button type="button" class="btn btn-default"
+							onclick="openSelect()">開啟所選</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="checkbox">
+							<label> <input checked id="Google" type="checkbox"><b><a
+									href="https://translate.google.com.tw/">Google Translate</a></b></label>
+						</div>
+						<div class="panel panel-default">
+							<div id="gTranslate" class="panel-body">
+								<a id="gTransLink" target="_blank" href=""></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="checkbox">
+							<label> <input id="Yandex" type="checkbox"><b><a
+									href="https://translate.yandex.com/">Yandex.Translate</a></b></label>
+						</div>
+						<div class="panel panel-default">
+							<div id="ydTranslate" class="panel-body">
+								<a id="ydTransLink" target="_blank" href=""></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="checkbox">
+							<label> <input checked id="Bing" type="checkbox"><b><a
+									href="http://www.bing.com/translator">Bing Translator</a></b>
+							</label>
+						</div>
+						<div class="panel panel-default">
+							<div id="bingTranslator" class="panel-body">
+								<a id="bingTransLink" target="_blank" href=""></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="checkbox">
+							<label> <input id="Baidu" type="checkbox"><b><a
+									href="http://fanyi.baidu.com">百度翻译</a></b>
+							</label>
+						</div>
+						<div class="panel panel-default">
+							<div id="bdFanyi" class="panel-body">
+								<a id="bdFanyiLink" target="_blank" href=""></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function update() {
+			var sourceLanList = document.getElementById("sourceLan");
+			var sourceLan = sourceLanList.options[sourceLanList.selectedIndex].value;
+			var ydSourceLan = sourceLan == "zh-tw" ? "zh" : sourceLan;
+			var bdSourceLan = sourceLan == "zh-tw" ? "cht" : sourceLan;
+			var targetLanList = document.getElementById("targetLan");
+			var targetLan = targetLanList.options[targetLanList.selectedIndex].value;
+			var ydTargetLan = targetLan == "zh-tw" ? "zh" : targetLan;
+			var bdTargetLan = targetLan == "zh-tw" ? "cht" : targetLan;
+			var textToTrans = document.getElementById("input").value;
+
+			var gTransUrl = "https://translate.google.com/?sl=" + sourceLan
+					+ "&tl=" + targetLan + "#" + sourceLan + "/" + targetLan
+					+ "/" + textToTrans;
+			var gTransLink = document.getElementById("gTransLink");
+			gTransLink.setAttribute('href', gTransUrl);
+			gTransLink.innerHTML = gTransUrl;
+
+			var ydTransUrl = "https://translate.yandex.com/?text="
+					+ textToTrans + "&lang=" + ydSourceLan + "-" + ydTargetLan;
+			var ydTransLink = document.getElementById("ydTransLink");
+			ydTransLink.setAttribute('href', ydTransUrl);
+			ydTransLink.innerHTML = ydTransUrl;
+
+			var bingTransUrl = "http://www.bing.com/translator?text="
+					+ textToTrans + "&from=" + sourceLan + "&to=" + targetLan;
+			var bingTransLink = document.getElementById("bingTransLink");
+			bingTransLink.setAttribute('href', bingTransUrl);
+			bingTransLink.innerHTML = bingTransUrl;
+
+			var bdFanyiUrl = "http://fanyi.baidu.com/#" + bdSourceLan + "/"
+					+ bdTargetLan + "/" + textToTrans;
+			var bdFanyiLink = document.getElementById("bdFanyiLink");
+			bdFanyiLink.setAttribute('href', bdFanyiUrl);
+			bdFanyiLink.innerHTML = bdFanyiUrl;
+		}
+
+		function openAll() {
+			var gTransLink = document.getElementById("gTransLink");
+			var gTransUrl = gTransLink.getAttribute('href');
+			var ydTransLink = document.getElementById("ydTransLink");
+			var ydTransUrl = ydTransLink.getAttribute('href');
+			var bingTransLink = document.getElementById("bingTransLink");
+			var bingTransUrl = bingTransLink.getAttribute('href');
+			var bdFanyiLink = document.getElementById("bdFanyiLink");
+			var bdFanyiUrl = bdFanyiLink.getAttribute('href');
+
+			window.open(gTransUrl, '_blank');
+			window.open(ydTransUrl, '_blank');
+			window.open(bingTransUrl, '_blank');
+			window.open(bdFanyiUrl, '_blank');
+		}
+		
+		function openSelect(){
+			if(document.getElementById("Google").checked){
+				var gTransLink = document.getElementById("gTransLink");
+				var gTransUrl = gTransLink.getAttribute('href');
+				window.open(gTransUrl, '_blank');
+			}
+			
+			if(document.getElementById("Yandex").checked){
+				var ydTransLink = document.getElementById("ydTransLink");
+				var ydTransUrl = ydTransLink.getAttribute('href');
+				window.open(ydTransUrl, '_blank');
+			}
+			
+			if(document.getElementById("Bing").checked){
+				var bingTransLink = document.getElementById("bingTransLink");
+				var bingTransUrl = bingTransLink.getAttribute('href');
+				window.open(bingTransUrl, '_blank');
+			}
+			
+			if(document.getElementById("Baidu").checked){
+				var bdFanyiLink = document.getElementById("bdFanyiLink");
+				var bdFanyiUrl = bdFanyiLink.getAttribute('href');
+				window.open(bdFanyiUrl, '_blank');
+			}
+		}
+	</script>
+</body>
+</html>
