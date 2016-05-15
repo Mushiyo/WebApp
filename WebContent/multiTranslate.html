@@ -109,63 +109,73 @@
 
 	<script>
 		function update() {
-      var textToTrans = document.getElementById("input").value;
-      
-      if(/\S/.test(textToTrans)){ // if there's some text in the input area
-			var sourceLanList = document.getElementById("sourceLan");
-			var sourceLan = sourceLanList.options[sourceLanList.selectedIndex].value;
-			var bingSourceLan = sourceLan == "zh-tw" ? "zh-CHT" : (sourceLan == "zh-cn" ? "zh-CHS" : sourceLan);
-			var ydSourceLan = sourceLan == "zh-tw" || sourceLan == "zh-cn" ? "zh" : sourceLan;
-			var bdSourceLan = sourceLan == "zh-tw" ? "cht" : sourceLan;
-			var targetLanList = document.getElementById("targetLan");
-			var targetLan = targetLanList.options[targetLanList.selectedIndex].value;
-			var bingTargetLan = targetLan == "zh-tw" ? "zh-CHT" : (targetLan == "zh-cn" ? "zh-CHS" : targetLan);
-			var ydTargetLan = targetLan == "zh-tw" || targetLan == "zh-cn" ? "zh" : targetLan;
-			var bdTargetLan = targetLan == "zh-tw" ? "cht" : targetLan;
-			
-
-			var gTransUrl = "https://translate.google.com/?sl=" + sourceLan
-					+ "&tl=" + targetLan + "#" + sourceLan + "/" + targetLan
-					+ "/" + textToTrans;
-			var gTransLink = document.getElementById("gTransLink");
-			gTransLink.setAttribute('href', gTransUrl);
-			gTransLink.innerHTML = gTransUrl;
-
-			var ydTransUrl = "https://translate.yandex.com/?text="
-					+ textToTrans + "&lang=" + ydSourceLan + "-" + ydTargetLan;
-			var ydTransLink = document.getElementById("ydTransLink");
-			ydTransLink.setAttribute('href', ydTransUrl);
-			ydTransLink.innerHTML = ydTransUrl;
-
-			var bingTransUrl = "http://www.bing.com/translator?text="
-					+ textToTrans + "&from=" + bingSourceLan + "&to=" + bingTargetLan;
-			var bingTransLink = document.getElementById("bingTransLink");
-			bingTransLink.setAttribute('href', bingTransUrl);
-			bingTransLink.innerHTML = bingTransUrl;
-
-			var bdFanyiUrl = "http://fanyi.baidu.com/#" + bdSourceLan + "/"
-					+ bdTargetLan + "/" + textToTrans;
-			var bdFanyiLink = document.getElementById("bdFanyiLink");
-			bdFanyiLink.setAttribute('href', bdFanyiUrl);
-			bdFanyiLink.innerHTML = bdFanyiUrl;
-     } else {
-			var gTransLink = document.getElementById("gTransLink");
-			gTransLink.innerHTML = "";
-			
-			var ydTransLink = document.getElementById("ydTransLink");
-			ydTransLink.innerHTML = "";
-			
-			var bingTransLink = document.getElementById("bingTransLink");
-			bingTransLink.innerHTML = "";
-       
-       var bdFanyiLink = document.getElementById("bdFanyiLink");
-			bdFanyiLink.innerHTML = "";
-     }
+	      var textToTrans = document.getElementById("input").value;
+	      
+	      if(/\S/.test(textToTrans)){ // if there's some text in the input area
+				var sourceLanList = document.getElementById("sourceLan");
+				var sourceLan = sourceLanList.options[sourceLanList.selectedIndex].value;
+				var bingSourceLan = sourceLan == "zh-tw" ? "zh-CHT" : (sourceLan == "zh-cn" ? "zh-CHS" : sourceLan);
+				var ydSourceLan = sourceLan == "zh-tw" || sourceLan == "zh-cn" ? "zh" : sourceLan;
+				var bdSourceLan = sourceLan == "zh-tw" ? "cht" : sourceLan;
+				var targetLanList = document.getElementById("targetLan");
+				var targetLan = targetLanList.options[targetLanList.selectedIndex].value;
+				var bingTargetLan = targetLan == "zh-tw" ? "zh-CHT" : (targetLan == "zh-cn" ? "zh-CHS" : targetLan);
+				var ydTargetLan = targetLan == "zh-tw" || targetLan == "zh-cn" ? "zh" : targetLan;
+				var bdTargetLan = targetLan == "zh-tw" ? "cht" : targetLan;
+				
+	
+				var gTransUrl = "https://translate.google.com/?sl=" + sourceLan
+						+ "&tl=" + targetLan + "#" + sourceLan + "/" + targetLan
+						+ "/" + textToTrans;
+				var gTransLink = document.getElementById("gTransLink");
+				gTransLink.setAttribute('href', gTransUrl);
+				gTransLink.innerHTML = gTransUrl;
+	
+				var ydTransUrl = "https://translate.yandex.com/?text="
+						+ textToTrans + "&lang=" + ydSourceLan + "-" + ydTargetLan;
+				var ydTransLink = document.getElementById("ydTransLink");
+				ydTransLink.setAttribute('href', ydTransUrl);
+				ydTransLink.innerHTML = ydTransUrl;
+	
+				var bingTransUrl = "http://www.bing.com/translator?text="
+						+ textToTrans + "&from=" + bingSourceLan + "&to=" + bingTargetLan;
+				var bingTransLink = document.getElementById("bingTransLink");
+				bingTransLink.setAttribute('href', bingTransUrl);
+				bingTransLink.innerHTML = bingTransUrl;
+	
+				var bdFanyiUrl = "http://fanyi.baidu.com/#" + bdSourceLan + "/"
+						+ bdTargetLan + "/" + textToTrans;
+				var bdFanyiLink = document.getElementById("bdFanyiLink");
+				bdFanyiLink.setAttribute('href', bdFanyiUrl);
+				bdFanyiLink.innerHTML = bdFanyiUrl;
+	     } else {
+				var gTransLink = document.getElementById("gTransLink");
+				gTransLink.setAttribute('href', "");
+				gTransLink.innerHTML = "";
+				
+				var ydTransLink = document.getElementById("ydTransLink");
+				ydTransLink.setAttribute('href', "");
+				ydTransLink.innerHTML = "";
+				
+				var bingTransLink = document.getElementById("bingTransLink");
+				bingTransLink.setAttribute('href', "");
+				bingTransLink.innerHTML = "";
+	       
+	      		var bdFanyiLink = document.getElementById("bdFanyiLink");
+	      		bdFanyiLink.setAttribute('href', "");
+				bdFanyiLink.innerHTML = "";
+	     }
 		}
 
 		function openAll() {
 			var gTransLink = document.getElementById("gTransLink");
 			var gTransUrl = gTransLink.getAttribute('href');
+			
+			if(gTransUrl == ""){
+				// if nothing to open, do nothing
+				return;
+			}
+			
 			var ydTransLink = document.getElementById("ydTransLink");
 			var ydTransUrl = ydTransLink.getAttribute('href');
 			var bingTransLink = document.getElementById("bingTransLink");
@@ -183,25 +193,33 @@
 			if(document.getElementById("Google").checked){
 				var gTransLink = document.getElementById("gTransLink");
 				var gTransUrl = gTransLink.getAttribute('href');
-				window.open(gTransUrl, '_blank');
+				if(gTransUrl != ""){
+					window.open(gTransUrl, '_blank');
+				}				
 			}
 			
 			if(document.getElementById("Yandex").checked){
 				var ydTransLink = document.getElementById("ydTransLink");
 				var ydTransUrl = ydTransLink.getAttribute('href');
-				window.open(ydTransUrl, '_blank');
+				if(ydTransUrl != ""){
+					window.open(ydTransUrl, '_blank');
+				}				
 			}
 			
 			if(document.getElementById("Bing").checked){
 				var bingTransLink = document.getElementById("bingTransLink");
 				var bingTransUrl = bingTransLink.getAttribute('href');
-				window.open(bingTransUrl, '_blank');
+				if(bingTransUrl != ""){
+					window.open(bingTransUrl, '_blank');
+				}				
 			}
 			
 			if(document.getElementById("Baidu").checked){
 				var bdFanyiLink = document.getElementById("bdFanyiLink");
 				var bdFanyiUrl = bdFanyiLink.getAttribute('href');
-				window.open(bdFanyiUrl, '_blank');
+				if(bdFanyiUrl != ""){
+					window.open(bdFanyiUrl, '_blank');
+				}				
 			}
 		}
 	</script>
