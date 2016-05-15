@@ -114,10 +114,12 @@
       if(/\S/.test(textToTrans)){ // if there's some text in the input area
 			var sourceLanList = document.getElementById("sourceLan");
 			var sourceLan = sourceLanList.options[sourceLanList.selectedIndex].value;
+			var bingSourceLan = sourceLan == "zh-tw" ? "zh-CHT" : (sourceLan == "zh-cn" ? "zh-CHS" : sourceLan);
 			var ydSourceLan = sourceLan == "zh-tw" || sourceLan == "zh-cn" ? "zh" : sourceLan;
 			var bdSourceLan = sourceLan == "zh-tw" ? "cht" : sourceLan;
 			var targetLanList = document.getElementById("targetLan");
 			var targetLan = targetLanList.options[targetLanList.selectedIndex].value;
+			var bingTargetLan = targetLan == "zh-tw" ? "zh-CHT" : (targetLan == "zh-cn" ? "zh-CHS" : targetLan);
 			var ydTargetLan = targetLan == "zh-tw" || targetLan == "zh-cn" ? "zh" : targetLan;
 			var bdTargetLan = targetLan == "zh-tw" ? "cht" : targetLan;
 			
@@ -136,7 +138,7 @@
 			ydTransLink.innerHTML = ydTransUrl;
 
 			var bingTransUrl = "http://www.bing.com/translator?text="
-					+ textToTrans + "&from=" + sourceLan + "&to=" + targetLan;
+					+ textToTrans + "&from=" + bingSourceLan + "&to=" + bingTargetLan;
 			var bingTransLink = document.getElementById("bingTransLink");
 			bingTransLink.setAttribute('href', bingTransUrl);
 			bingTransLink.innerHTML = bingTransUrl;
